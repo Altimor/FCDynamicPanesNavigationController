@@ -1,0 +1,10 @@
+PODS:
+  - FCMutableArray (1.0)
+
+DEPENDENCIES:
+  - FCMutableArray
+
+SPEC CHECKSUMS:
+  FCMutableArray: 64d4bb99881e885f430d30efe057aed65922df05
+
+COCOAPODS: 0.29.0
