@@ -48,7 +48,6 @@
 	newLocation.y = MAX(newLocation.y,self.view.layer.anchorPoint.y * self.view.bounds.size.height);
 	
 	if (gesture.state == UIGestureRecognizerStateBegan) {
-		NSLog(@"began");
 		CGPoint anchor = [gesture locationInView:gesture.view];
 		[self setAnchorPoint:CGPointMake(anchor.x/gesture.view.bounds.size.width,
 										 anchor.y/gesture.view.bounds.size.height)];
@@ -57,7 +56,6 @@
 		[self.behavior removeChildBehavior:self.attachmentBehavior];
 		[self.animator removeBehavior:self.behavior];
 	} else if (gesture.state == UIGestureRecognizerStateChanged) {
-		NSLog(@"changed");
 		self.view.layer.position = newLocation;
 	} else if (gesture.state == UIGestureRecognizerStateEnded) {
         [self setAnchorPoint:CGPointMake(0.5,0.5)];
