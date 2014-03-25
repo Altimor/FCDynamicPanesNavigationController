@@ -104,6 +104,20 @@
 	[self.behavior addChildBehavior:self.collisionBehavior];
 	
 	self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.view]];
+	self.gravityBehavior.action = ^{
+		__weak FCDynamicPane *weakSelf = self;
+		if (weakSelf.view.frame.origin.y <= 50) {
+			self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2-3);
+			self.attachmentBehavior.damping = 0.7f;
+			self.attachmentBehavior.frequency = 2.0f;
+			[self.behavior addChildBehavior:self.attachmentBehavior];
+		} else if (weakSelf.view.frame.origin.y >= TILE_Y-60) {
+			self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2+TILE_Y);
+			self.attachmentBehavior.damping = 0.4f;
+			self.attachmentBehavior.frequency = 4.0f;
+			[self.behavior addChildBehavior:self.attachmentBehavior];
+		}
+	};
 	[self.behavior addChildBehavior:self.gravityBehavior];
 	
 	self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.view attachedToAnchor:CGPointMake(160, TILE_Y+[UIScreen mainScreen].bounds.size.height/2)];
@@ -112,8 +126,9 @@
 	self.attachmentBehavior.length = 0;
 	
 	UIDynamicItemBehavior *dynamicView = [[UIDynamicItemBehavior alloc] initWithItems:@[self.view]];
-	dynamicView.resistance = 0.1f;
-	dynamicView.density = 3.0f;
+//	dynamicView.resistance = 0.1f;
+//	dynamicView.density = 3.0f;
+	dynamicView.elasticity = 0.3f;
 	dynamicView.allowsRotation = NO;
 	[self.behavior addChildBehavior:dynamicView];
 	
@@ -143,12 +158,11 @@
 }
 
 - (void)setState:(FCDynamicPaneState)state {
-	if (state == FCDynamicPaneStateActive) {
-		self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
-		[self.view removeGestureRecognizer:self.tapGestureRecognizer];
+	if (state == FCDynamicPaneStateActive || state == FCDynamicPaneStateRoot) {
+		self.gravityBehavior.gravityDirection = CGVectorMake(0, -1);
 	} else if (state == FCDynamicPaneStateRetracted) {
+		self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2 + TILE_Y);
 		self.gravityBehavior.gravityDirection = CGVectorMake(0, 1.5);
-		[self.behavior addChildBehavior:self.attachmentBehavior];
 	}
 	
 	_state = state;

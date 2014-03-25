@@ -59,7 +59,7 @@
 		object.view.frame = CGRectMake(0, 0, object.view.frame.size.width, object.view.frame.size.height);
 		[self.view addSubview:object.view];
 		[object didMoveToParentViewController:self];
-		object.state = FCDynamicPaneStateActive;
+		object.state = FCDynamicPaneStateRoot;
 	} else {
 		FCDynamicPane *includingViewController = ((FCDynamicPane *)[array objectAtIndex:[array indexOfObject:object]-1]);
 		UIView *includingView = includingViewController.view;
