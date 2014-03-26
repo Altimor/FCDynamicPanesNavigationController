@@ -27,6 +27,15 @@
     return self;
 }
 
+- (id)init {
+	self = [super init];
+	if (!self) {
+		return nil;
+	}
+	_viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
+	return self;
+}
+
 - (id)initWithRootViewController: (UIViewController *)viewController {
 	self = [self initWithViewControllers:@[viewController]];
 	if (!self) {
