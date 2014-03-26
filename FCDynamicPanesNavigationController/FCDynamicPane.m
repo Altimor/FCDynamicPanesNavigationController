@@ -63,17 +63,17 @@
 		//I think that's a bug in the SDK, the collision behavior keeps losing its points
 		[self.collisionBehavior addBoundaryWithIdentifier:@"collision" fromPoint:CGPointMake(0, -1) toPoint:CGPointMake(320, -1)];
 		
-		CGFloat pushDirectionY = [gesture velocityInView:self.view].y/2;
+		CGFloat pushDirectionY = [gesture velocityInView:self.view].y;
 		[self.pushBehavior setPushDirection:CGVectorMake(0, pushDirectionY)];
 		self.pushBehavior.active = YES;
-		self.pushBehavior.action = (void (^)(void)) ^{
-			__weak FCDynamicPane *weakSelf = self;
-			if (weakSelf.view.frame.origin.y <= TILE_Y-60 && pushDirectionY < 0) {
-				weakSelf.state = FCDynamicPaneStateActive;
-			} else if ((weakSelf.view.frame.origin.y > 60 && pushDirectionY > 0)) {
-				weakSelf.state = FCDynamicPaneStateRetracted;
-			}
-		};
+//		self.pushBehavior.action = (void (^)(void)) ^{
+//			__weak FCDynamicPane *weakSelf = self;
+//			if (weakSelf.view.frame.origin.y <= TILE_Y-60 && pushDirectionY < 0) {
+//				weakSelf.state = FCDynamicPaneStateActive;
+//			} else if ((weakSelf.view.frame.origin.y > 60 && pushDirectionY > 0)) {
+//				weakSelf.state = FCDynamicPaneStateRetracted;
+//			}
+//		};
 		
 		[self.behavior addChildBehavior:self.pushBehavior];
 		[self.animator addBehavior:self.behavior];
@@ -104,6 +104,20 @@
 	[self.behavior addChildBehavior:self.collisionBehavior];
 	
 	self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.view]];
+	self.gravityBehavior.action = ^{
+		__weak FCDynamicPane *weakSelf = self;
+		if (weakSelf.view.frame.origin.y <= 50) {
+			self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2-10);
+			self.attachmentBehavior.damping = 0.7f;
+			self.attachmentBehavior.frequency = 2.0f;
+			[self.behavior addChildBehavior:self.attachmentBehavior];
+		} else if (weakSelf.view.frame.origin.y >= TILE_Y-60) {
+			self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2+TILE_Y);
+			self.attachmentBehavior.damping = 0.4f;
+			self.attachmentBehavior.frequency = 4.0f;
+			[self.behavior addChildBehavior:self.attachmentBehavior];
+		}
+	};
 	[self.behavior addChildBehavior:self.gravityBehavior];
 	
 	self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.view attachedToAnchor:CGPointMake(160, TILE_Y+[UIScreen mainScreen].bounds.size.height/2)];

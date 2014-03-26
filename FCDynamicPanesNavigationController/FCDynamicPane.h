@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define TILE_HEIGHT			150
+#define TILE_HEIGHT			50
 #define TILE_Y				[UIScreen mainScreen].bounds.size.height - TILE_HEIGHT
 
 typedef NS_ENUM(NSUInteger, FCDynamicPaneState) {
