@@ -33,7 +33,7 @@
 }
 
 - (void)tapHandle:(UITapGestureRecognizer *)gesture {
-	if (self.state != FCDynamicPaneStateActive) {
+	if (self.state != FCDynamicPaneStateRoot) {
 		[self.pushBehavior setPushDirection:CGVectorMake(0, -500)];
 		self.pushBehavior.active = YES;
 	}
