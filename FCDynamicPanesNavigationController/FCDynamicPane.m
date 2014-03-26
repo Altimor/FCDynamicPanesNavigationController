@@ -66,14 +66,6 @@
 		CGFloat pushDirectionY = [gesture velocityInView:self.view].y;
 		[self.pushBehavior setPushDirection:CGVectorMake(0, pushDirectionY)];
 		self.pushBehavior.active = YES;
-//		self.pushBehavior.action = (void (^)(void)) ^{
-//			__weak FCDynamicPane *weakSelf = self;
-//			if (weakSelf.view.frame.origin.y <= TILE_Y-60 && pushDirectionY < 0) {
-//				weakSelf.state = FCDynamicPaneStateActive;
-//			} else if ((weakSelf.view.frame.origin.y > 60 && pushDirectionY > 0)) {
-//				weakSelf.state = FCDynamicPaneStateRetracted;
-//			}
-//		};
 		
 		[self.behavior addChildBehavior:self.pushBehavior];
 		[self.animator addBehavior:self.behavior];
