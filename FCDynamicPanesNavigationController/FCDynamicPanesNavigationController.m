@@ -33,6 +33,7 @@
 		return nil;
 	}
 	_viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
+	_paneSwitchingEnabled = YES;
 	return self;
 }
 
@@ -57,6 +58,13 @@
 - (void)pushViewController:(UIViewController *)viewController retracted:(BOOL)retracted {
 	FCDynamicPane *dynamicPane = [[FCDynamicPane alloc] initWithViewController:viewController];
 	[_viewControllers addObject:dynamicPane];
+}
+
+- (void)setPaneSwitchingEnabled:(BOOL)paneSwitchingEnabled {
+	_paneSwitchingEnabled = paneSwitchingEnabled;
+	for (FCDynamicPane *pane in _viewControllers) {
+		pane.swipeEnabled = paneSwitchingEnabled;
+	}
 }
 
 #pragma mark - FCMutableArray delegate

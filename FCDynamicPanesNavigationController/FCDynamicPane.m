@@ -20,6 +20,7 @@
 	if (!self) {
 		return nil;
 	}
+	_swipeEnabled = YES;
 	return self;
 }
 
@@ -40,7 +41,7 @@
 }
 
 - (void)panHandle:(UIPanGestureRecognizer *)gesture {
-	if (self.state == FCDynamicPaneStateRoot) {
+	if (self.state == FCDynamicPaneStateRoot || !self.swipeEnabled) {
 		return;
 	}
 	

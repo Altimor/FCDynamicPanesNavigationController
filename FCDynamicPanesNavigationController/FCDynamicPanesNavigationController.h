@@ -17,5 +17,6 @@
 - (void)pushViewController:(UIViewController *)viewController retracted:(BOOL)retracted;
 
 @property (readonly, nonatomic) FCMutableArray *viewControllers;
+@property (nonatomic) BOOL paneSwitchingEnabled;
 
 @end
