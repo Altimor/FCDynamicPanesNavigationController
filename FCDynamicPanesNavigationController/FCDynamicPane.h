@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, FCDynamicPaneState) {
 	FCDynamicPaneStateRoot
 };
 
-@class FCDynamicPane;
+@class FCDynamicPane, FCDynamicPanesNavigationController;
 
 @interface FCDynamicPane : UIViewController {
 	@private
@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, FCDynamicPaneState) {
 }
 
 @property (nonatomic, readonly) UIViewController *viewController;
+@property (nonatomic, readonly)	FCDynamicPanesNavigationController *panesNavigationController;
 @property (nonatomic) UIView *view;
 @property (nonatomic) BOOL swipeEnabled;
 @property (nonatomic) FCDynamicPaneState state;

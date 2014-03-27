@@ -5,11 +5,13 @@
 //
 
 #import "FCDynamicPane.h"
+#import "FCDynamicPanesNavigationController.h"
 
 @interface FCDynamicPane ()
 
 @property (nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic) FCDynamicPanesNavigationController *panesNavigationController;
 
 @end
 
@@ -170,6 +172,17 @@
 	}
 	
 	_state = state;
+}
+
+- (FCDynamicPanesNavigationController *)panesNavigationController {
+	if (!_panesNavigationController) {
+		UIViewController *currentParentViewController = self.parentViewController;
+		while (currentParentViewController && ![currentParentViewController isKindOfClass:[FCDynamicPanesNavigationController class]]) {
+			currentParentViewController = currentParentViewController.parentViewController;
+		}
+		_panesNavigationController = (FCDynamicPanesNavigationController *)currentParentViewController;
+	}
+	return _panesNavigationController;
 }
 
 @end
