@@ -81,7 +81,6 @@
 	[self.view addSubview:_viewController.view];
 	
 	self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandle:)];
-	[_viewController.view addGestureRecognizer:self.tapGestureRecognizer];
 	
 	self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandle:)];
 	[_viewController.view addGestureRecognizer:self.panGestureRecognizer];
@@ -152,6 +151,10 @@
 }
 
 - (void)setState:(FCDynamicPaneState)state {
+	if (state == FCDynamicPaneStateRoot) {
+		self.swipeEnabled = NO;
+	}
+	
 	if (state == FCDynamicPaneStateActive || state == FCDynamicPaneStateRoot) {
 		self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
 		self.gravityBehavior.action = ^{
@@ -172,6 +175,17 @@
 	}
 	
 	_state = state;
+}
+
+- (void)setSwipeEnabled:(BOOL)swipeEnabled {
+	if (_swipeEnabled != swipeEnabled) {
+		_swipeEnabled = swipeEnabled;
+		if (!swipeEnabled) {
+			[_viewController.view removeGestureRecognizer:self.panGestureRecognizer];
+		} else {
+			[_viewController.view addGestureRecognizer:self.panGestureRecognizer];
+		}
+	}
 }
 
 - (FCDynamicPanesNavigationController *)panesNavigationController {
