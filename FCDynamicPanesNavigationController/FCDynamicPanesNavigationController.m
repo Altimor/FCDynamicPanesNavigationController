@@ -100,31 +100,32 @@
 	// Looks like we're popping a ViewController
 	if ([object isKindOfClass:[FCDynamicPane class]]) {
 		FCDynamicPane *pane = (FCDynamicPane *)object;
-		if ([array indexOfObject:pane]) {
-			//1. Move its childViewController (N+1) into its parentViewController (N-1)
-			__block FCDynamicPane *childPane = nil;
-			[pane.childViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-				if ([obj isKindOfClass:[FCDynamicPane class]]) {
-					childPane = obj;
-					*stop = YES;
-				}
-			}];
-			if (!childPane) {
-				return;
+		//1. Move its childViewController (N+1) into its parentViewController (N-1)
+		__block FCDynamicPane *childPane = nil;
+		[pane.childViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if ([obj isKindOfClass:[FCDynamicPane class]]) {
+				childPane = obj;
+				*stop = YES;
 			}
-
+		}];
+		if (childPane) {
 			[childPane.view removeFromSuperview];
 			[childPane removeFromParentViewController];
-			childPane.view.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, childPane.view.frame.size.width, childPane.view.frame.size.height);
+			childPane.view.frame = CGRectMake(0, [array indexOfObject:pane] ? [UIScreen mainScreen].bounds.size.height : 0, childPane.view.frame.size.width, childPane.view.frame.size.height);
 			[pane.parentViewController.view addSubview:childPane.view];
 			[pane.parentViewController addChildViewController:childPane];
 			[childPane didMoveToParentViewController:pane.parentViewController];
 			
-			//2. Remove from its parentViewController
-			[pane.view removeFromSuperview];
-			[pane removeFromParentViewController];
-			[pane didMoveToParentViewController:nil];
+			if (![array indexOfObject:pane]) {
+				// The Root Pane just got removed
+				childPane.state = FCDynamicPaneStateRoot;
+			}
 		}
+		
+		//2. Remove from its parentViewController
+		[pane.view removeFromSuperview];
+		[pane removeFromParentViewController];
+		[pane didMoveToParentViewController:nil];
 	}
 }
 
