@@ -67,6 +67,10 @@
 	}
 }
 
+- (void)popViewController {
+	[self.viewControllers removeLastObject];
+}
+
 #pragma mark - FCMutableArray delegate
 
 - (void)object:(FCDynamicPane *)object wasAddedToArray:(FCMutableArray *)array {
