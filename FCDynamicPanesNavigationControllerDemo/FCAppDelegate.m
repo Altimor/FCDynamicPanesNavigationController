@@ -28,14 +28,13 @@
 	self.window.rootViewController = dynamicPanes;
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-		NSLog(@"active");
-//		[((FCDynamicPane *)dynamicPanes.viewControllers[2]) setState:FCDynamicPaneStateActive];
 		[dynamicPanes.viewControllers removeObjectAtIndex:0];
 	});
 	
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+	
     return YES;
 }
 

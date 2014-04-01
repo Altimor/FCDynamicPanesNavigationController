@@ -110,8 +110,9 @@
 		}];
 		if (childPane) {
 			[childPane.view removeFromSuperview];
+			[childPane willMoveToParentViewController:nil];
 			[childPane removeFromParentViewController];
-			childPane.view.frame = CGRectMake(0, [array indexOfObject:pane] ? [UIScreen mainScreen].bounds.size.height : 0, childPane.view.frame.size.width, childPane.view.frame.size.height);
+			childPane.view.frame = CGRectMake(0, [array indexOfObject:pane] ? [UIScreen mainScreen].bounds.size.height: 0, childPane.view.frame.size.width, childPane.view.frame.size.height);
 			[pane.parentViewController.view addSubview:childPane.view];
 			[pane.parentViewController addChildViewController:childPane];
 			[childPane didMoveToParentViewController:pane.parentViewController];
@@ -126,6 +127,16 @@
 		[pane.view removeFromSuperview];
 		[pane removeFromParentViewController];
 		[pane didMoveToParentViewController:nil];
+		
+		//3. Bring back the child view's child view on top
+		__block FCDynamicPane *childChildPane = nil;
+		[childPane.childViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if ([obj isKindOfClass:[FCDynamicPane class]]) {
+				childChildPane = obj;
+				*stop = YES;
+			}
+		}];
+		[childPane.view bringSubviewToFront:childChildPane.view];
 	}
 }
 
