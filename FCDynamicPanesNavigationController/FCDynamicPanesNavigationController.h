@@ -22,6 +22,8 @@
 
 - (void)pushViewController:(UIViewController *)viewController retracted:(BOOL)retracted;
 
+- (void)popToViewController:(UIViewController *)viewController animated:(BOOL)animated;
+
 - (void)popViewControllerAnimated:(BOOL)animated;
 
 @property (readonly, nonatomic) FCMutableArray *viewControllers;

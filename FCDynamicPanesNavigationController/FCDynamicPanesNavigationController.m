@@ -67,18 +67,26 @@
 	}
 }
 
-- (void)popViewControllerAnimated:(BOOL)animated {
+- (void)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	if (self.viewControllers.count > 1) {
+		FCDynamicPane *pane = [viewController isKindOfClass:[FCDynamicPane class]] ? (FCDynamicPane *)viewController : ([viewController.parentViewController isKindOfClass:[FCDynamicPane class]] ? (FCDynamicPane *)viewController.parentViewController : nil);
+		if (!pane || [[self.viewControllers firstObject] isEqual:pane]) {
+			return;
+		}
+		
 		if (animated) {
-			FCDynamicPane *lastPane = [self.viewControllers lastObject];
-			lastPane.gravityBehavior.gravityDirection = CGVectorMake(0, 3);
-			lastPane.gravityBehavior.action = nil;
-			lastPane.state = FCDynamicPaneLeavingScreen;
-			[lastPane.behavior removeChildBehavior:lastPane.attachmentBehavior];
+			pane.gravityBehavior.gravityDirection = CGVectorMake(0, 3);
+			pane.gravityBehavior.action = nil;
+			pane.state = FCDynamicPaneLeavingScreen;
+			[pane.behavior removeChildBehavior:pane.attachmentBehavior];
 		} else {
-			[self.viewControllers removeLastObject];
+			[self.viewControllers removeObject:pane];
 		}
 	}
+}
+
+- (void)popViewControllerAnimated:(BOOL)animated {
+	[self popToViewController:self.viewControllers[self.viewControllers.count-2] animated:animated];
 }
 
 #pragma mark - FCMutableArray delegate
@@ -172,10 +180,13 @@
 @implementation UIViewController (FCDynamicPanesNavigationController)
 
 - (FCDynamicPanesNavigationController *)panesNavigationController {
-	if ([self.parentViewController.parentViewController isKindOfClass:[FCDynamicPanesNavigationController class]]) {
-		return (FCDynamicPanesNavigationController *)self.parentViewController.parentViewController;
+	UIViewController *currentTestingViewController = self.parentViewController;
+
+	while (![currentTestingViewController isKindOfClass:[FCDynamicPanesNavigationController class]]) {
+		currentTestingViewController = currentTestingViewController.parentViewController;
 	}
-	return nil;
+	
+	return (FCDynamicPanesNavigationController *)currentTestingViewController;
 }
 
 @end

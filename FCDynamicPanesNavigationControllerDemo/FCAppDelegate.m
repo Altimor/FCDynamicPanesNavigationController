@@ -7,6 +7,7 @@
 //
 
 #import "FCAppDelegate.h"
+#import "FCSampleViewController.h"
 #import "FCDynamicPanesNavigationController.h"
 
 @implementation FCAppDelegate
@@ -15,13 +16,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	UIViewController *viewController1 = [UIViewController new];
+	FCSampleViewController *viewController1 = [FCSampleViewController new];
 	viewController1.view.backgroundColor = [UIColor colorWithRed: 0.102 green: 0.737 blue: 0.612 alpha: 1];
 	
-	UIViewController *viewController2 = [UIViewController new];
+	FCSampleViewController *viewController2 = [FCSampleViewController new];
 	viewController2.view.backgroundColor = [UIColor colorWithRed: 0.204 green: 0.286 blue: 0.369 alpha: 1];
 	
-	UIViewController *viewController3 = [UIViewController new];
+	FCSampleViewController *viewController3 = [FCSampleViewController new];
 	viewController3.view.backgroundColor = [UIColor colorWithRed: 0.945 green: 0.769 blue: 0.0588 alpha: 1];
 
 	FCDynamicPanesNavigationController *dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:@[viewController1, viewController2, viewController3]];

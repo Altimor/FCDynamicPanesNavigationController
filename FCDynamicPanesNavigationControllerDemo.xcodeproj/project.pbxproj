@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D07709B18FDAF73008489E2 /* FCSampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D07709918FDAF73008489E2 /* FCSampleViewController.m */; };
+		3D07709C18FDAF73008489E2 /* FCSampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D07709A18FDAF73008489E2 /* FCSampleViewController.xib */; };
 		3D1EEBBC18DBA1EF0076D428 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1EEBBB18DBA1EF0076D428 /* Foundation.framework */; };
 		3D1EEBBE18DBA1EF0076D428 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1EEBBD18DBA1EF0076D428 /* CoreGraphics.framework */; };
 		3D1EEBC018DBA1EF0076D428 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1EEBBF18DBA1EF0076D428 /* UIKit.framework */; };
@@ -36,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D07709818FDAF73008489E2 /* FCSampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCSampleViewController.h; sourceTree = "<group>"; };
+		3D07709918FDAF73008489E2 /* FCSampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCSampleViewController.m; sourceTree = "<group>"; };
+		3D07709A18FDAF73008489E2 /* FCSampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FCSampleViewController.xib; sourceTree = "<group>"; };
 		3D1EEBB818DBA1EF0076D428 /* FCDynamicPanesNavigationControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCDynamicPanesNavigationControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1EEBBB18DBA1EF0076D428 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3D1EEBBD18DBA1EF0076D428 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +129,9 @@
 				3D1EEBEA18DBA20D0076D428 /* FCDynamicPanesNavigationController */,
 				3D1EEBCA18DBA1EF0076D428 /* FCAppDelegate.h */,
 				3D1EEBCB18DBA1EF0076D428 /* FCAppDelegate.m */,
+				3D07709818FDAF73008489E2 /* FCSampleViewController.h */,
+				3D07709918FDAF73008489E2 /* FCSampleViewController.m */,
+				3D07709A18FDAF73008489E2 /* FCSampleViewController.xib */,
 				3D1EEBCD18DBA1EF0076D428 /* Images.xcassets */,
 				3D1EEBF718DBA9E70076D428 /* LICENSE */,
 				3D1EEBC218DBA1EF0076D428 /* Supporting Files */,
@@ -251,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D1EEBF818DBA9E70076D428 /* LICENSE in Resources */,
+				3D07709C18FDAF73008489E2 /* FCSampleViewController.xib in Resources */,
 				3D1EEBC618DBA1EF0076D428 /* InfoPlist.strings in Resources */,
 				3D1EEBCE18DBA1EF0076D428 /* Images.xcassets in Resources */,
 			);
@@ -305,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D1EEBC818DBA1EF0076D428 /* main.m in Sources */,
+				3D07709B18FDAF73008489E2 /* FCSampleViewController.m in Sources */,
 				3D1EEBEF18DBA20D0076D428 /* FCDynamicPanesNavigationController.m in Sources */,
 				3D1EEBCC18DBA1EF0076D428 /* FCAppDelegate.m in Sources */,
 				3D1EEBF018DBA20D0076D428 /* FCDynamicPane.m in Sources */,
