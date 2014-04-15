@@ -8,6 +8,12 @@
 #import <FCMutableArray.h>
 #import "FCDynamicPane.h"
 
+@interface UIViewController (FCDynamicPanesNavigationController)
+
+@property (nonatomic, readonly) FCDynamicPanesNavigationController *panesNavigationController;
+
+@end
+
 @interface FCDynamicPanesNavigationController : UIViewController <FCMutableArrayDelegate, FCDynamicPaneDelegate>
 
 - (id)initWithRootViewController: (UIViewController *)viewController;

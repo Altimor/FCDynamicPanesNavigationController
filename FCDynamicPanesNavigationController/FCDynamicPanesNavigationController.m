@@ -68,14 +68,16 @@
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
-	if (animated) {
-		FCDynamicPane *lastPane = [self.viewControllers lastObject];
-		lastPane.gravityBehavior.gravityDirection = CGVectorMake(0, 3);
-		lastPane.gravityBehavior.action = nil;
-		lastPane.state = FCDynamicPaneLeavingScreen;
-		[lastPane.behavior removeChildBehavior:lastPane.attachmentBehavior];
-	} else {
-		[self.viewControllers removeLastObject];
+	if (self.viewControllers.count > 1) {
+		if (animated) {
+			FCDynamicPane *lastPane = [self.viewControllers lastObject];
+			lastPane.gravityBehavior.gravityDirection = CGVectorMake(0, 3);
+			lastPane.gravityBehavior.action = nil;
+			lastPane.state = FCDynamicPaneLeavingScreen;
+			[lastPane.behavior removeChildBehavior:lastPane.attachmentBehavior];
+		} else {
+			[self.viewControllers removeLastObject];
+		}
 	}
 }
 
@@ -163,6 +165,17 @@
 	if (pane.state == FCDynamicPaneLeavingScreen) {
 		[self.viewControllers removeObject:pane];
 	}
+}
+
+@end
+
+@implementation UIViewController (FCDynamicPanesNavigationController)
+
+- (FCDynamicPanesNavigationController *)panesNavigationController {
+	if ([self.parentViewController.parentViewController isKindOfClass:[FCDynamicPanesNavigationController class]]) {
+		return (FCDynamicPanesNavigationController *)self.parentViewController.parentViewController;
+	}
+	return nil;
 }
 
 @end
