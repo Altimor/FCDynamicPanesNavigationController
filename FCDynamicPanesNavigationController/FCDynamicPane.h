@@ -12,15 +12,24 @@
 typedef NS_ENUM(NSUInteger, FCDynamicPaneState) {
 	FCDynamicPaneStateActive,
 	FCDynamicPaneStateRetracted,
-	FCDynamicPaneStateRoot
+	FCDynamicPaneStateRoot,
+	FCDynamicPaneLeavingScreen
 };
 
 @class FCDynamicPane, FCDynamicPanesNavigationController;
+
+@protocol FCDynamicPaneDelegate <NSObject>
+
+- (void)dynamicPaneDidGoOutOfScreen:(FCDynamicPane *)pane;
+
+@end
 
 @interface FCDynamicPane : UIViewController {
 	@private
 	UIViewController *_viewController;
 }
+
+@property (nonatomic) id<FCDynamicPaneDelegate> delegate;
 
 @property (nonatomic, readonly) UIViewController *viewController;
 @property (nonatomic, readonly)	FCDynamicPanesNavigationController *panesNavigationController;

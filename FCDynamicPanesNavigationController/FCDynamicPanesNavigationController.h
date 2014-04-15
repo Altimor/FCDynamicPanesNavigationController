@@ -8,7 +8,7 @@
 #import <FCMutableArray.h>
 #import "FCDynamicPane.h"
 
-@interface FCDynamicPanesNavigationController : UIViewController <FCMutableArrayDelegate>
+@interface FCDynamicPanesNavigationController : UIViewController <FCMutableArrayDelegate, FCDynamicPaneDelegate>
 
 - (id)initWithRootViewController: (UIViewController *)viewController;
 
@@ -16,7 +16,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController retracted:(BOOL)retracted;
 
-- (void)popViewController;
+- (void)popViewControllerAnimated:(BOOL)animated;
 
 @property (readonly, nonatomic) FCMutableArray *viewControllers;
 @property (nonatomic) BOOL paneSwitchingEnabled;

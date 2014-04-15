@@ -7,7 +7,9 @@
 #import "FCDynamicPane.h"
 #import "FCDynamicPanesNavigationController.h"
 
-@interface FCDynamicPane ()
+@interface FCDynamicPane () {
+	BOOL _isOutOfScreen;
+}
 
 @property (nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
@@ -89,6 +91,7 @@
 - (void)didMoveToParentViewController:(UIViewController *)parent {
 	[super didMoveToParentViewController:parent];
 	[_viewController didMoveToParentViewController:self];
+	_isOutOfScreen = [self.view.superview convertPoint:self.view.frame.origin toView:nil].y > [UIScreen mainScreen].bounds.size.height;
 	
 	self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:[self.view superview]];
 	
@@ -100,6 +103,16 @@
 	self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.view]];
 	self.gravityBehavior.action = ^{
 		__weak FCDynamicPane *weakSelf = self;
+		
+		BOOL isOutOfScreenNow = [weakSelf.view.superview convertPoint:weakSelf.view.frame.origin toView:nil].y > [UIScreen mainScreen].bounds.size.height;
+		if (isOutOfScreenNow && !_isOutOfScreen) {
+			if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(dynamicPaneDidGoOutOfScreen:)]) {
+				[weakSelf.delegate dynamicPaneDidGoOutOfScreen:self];
+			}
+		}
+		
+		_isOutOfScreen = isOutOfScreenNow;
+		
 		if (weakSelf.view.frame.origin.y <= 50) {
 			self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2-10);
 			self.attachmentBehavior.damping = 0.7f;
@@ -160,7 +173,7 @@
 		self.gravityBehavior.action = ^{
 			__weak FCDynamicPane *weakSelf = self;
 			if (weakSelf.view.frame.origin.y <= 10) {
-				self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2-3);
+				self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2);
 				self.attachmentBehavior.damping = 0.7f;
 				self.attachmentBehavior.frequency = 1.0f;
 				[self.behavior addChildBehavior:self.attachmentBehavior];

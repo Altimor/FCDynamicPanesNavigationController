@@ -27,10 +27,6 @@
 	FCDynamicPanesNavigationController *dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:@[viewController1, viewController2, viewController3]];
 	self.window.rootViewController = dynamicPanes;
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-		[dynamicPanes.viewControllers removeObjectAtIndex:0];
-	});
-	
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

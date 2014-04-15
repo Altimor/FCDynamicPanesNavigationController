@@ -67,8 +67,16 @@
 	}
 }
 
-- (void)popViewController {
-	[self.viewControllers removeLastObject];
+- (void)popViewControllerAnimated:(BOOL)animated {
+	if (animated) {
+		FCDynamicPane *lastPane = [self.viewControllers lastObject];
+		lastPane.gravityBehavior.gravityDirection = CGVectorMake(0, 3);
+		lastPane.gravityBehavior.action = nil;
+		lastPane.state = FCDynamicPaneLeavingScreen;
+		[lastPane.behavior removeChildBehavior:lastPane.attachmentBehavior];
+	} else {
+		[self.viewControllers removeLastObject];
+	}
 }
 
 #pragma mark - FCMutableArray delegate
@@ -142,12 +150,19 @@
 
 - (BOOL)shouldAddObject:(id)object toArray:(FCMutableArray *)array {
 	if ([object isKindOfClass:[FCDynamicPane class]]) {
+		((FCDynamicPane *)object).delegate = self;
 		return YES;
 	} else if ([object isKindOfClass:[UIViewController class]]) {
 		FCDynamicPane *compositeItem = [[FCDynamicPane alloc] initWithViewController:object];
 		[array addObject:compositeItem];
 	}
 	return NO;
+}
+
+- (void)dynamicPaneDidGoOutOfScreen:(FCDynamicPane *)pane {
+	if (pane.state == FCDynamicPaneLeavingScreen) {
+		[self.viewControllers removeObject:pane];
+	}
 }
 
 @end
